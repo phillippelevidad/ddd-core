@@ -114,7 +114,7 @@ public class MyController
 }
 ```
 
-As for dispatching domain events, a google place to call the dispatcher might be your repository's' SaveChanges or similar, right before or right after the fact:
+As for dispatching domain events, a good place to call the dispatcher might be your repository's' SaveChanges or similar, right before or right after the fact:
 
 ``` csharp
 public class AppDbContext : DbContext
