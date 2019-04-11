@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace Core
 {
+    // Credits: https://github.com/jhewlett/ValueObject
     public abstract class ValueObject : IEquatable<ValueObject>
     {
         private List<PropertyInfo> properties;
