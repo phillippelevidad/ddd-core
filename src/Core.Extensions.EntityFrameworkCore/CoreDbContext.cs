@@ -44,12 +44,11 @@ namespace Core
 
         private async Task DispatchEventsAsync()
         {
-            var entities = ChangeTracker.Entries<Entity>()
-                .Select(e => e.Entity)
-                .Where(e => e.HasDomainEvents)
-                .ToArray();
+            var events = ChangeTracker.Entries<Entity>()
+                .Where(e => e.Entity.HasDomainEvents)
+                .SelectMany(e => e.Entity.ConsumeDomainEvents());
 
-            foreach (var evt in entities.SelectMany(e => e.ConsumeDomainEvents()))
+            foreach (var evt in events)
                 await EventDispatcher.DispatchAsync(evt);
         }
     }

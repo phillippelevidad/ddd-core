@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.539
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61665BE7-B734-4312-AC1E-055FBF20F32F}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{61665BE7-B73
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "src\Core\Core.csproj", "{2AEBFA87-296F-4C09-92D8-14559B2A0D1B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Extensions.MediatorHandlers", "src\Core.Extensions.MediatorHandlers\Core.Extensions.MediatorHandlers.csproj", "{6492BFC6-9F1E-4D08-9531-0E76A434CC39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Extensions.EntityFrameworkCore", "src\Core.Extensions.EntityFrameworkCore\Core.Extensions.EntityFrameworkCore.csproj", "{77A06190-AAF7-4723-8734-F5D2EC0E657A}"
 EndProject
@@ -24,10 +22,6 @@ Global
 		{2AEBFA87-296F-4C09-92D8-14559B2A0D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AEBFA87-296F-4C09-92D8-14559B2A0D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AEBFA87-296F-4C09-92D8-14559B2A0D1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6492BFC6-9F1E-4D08-9531-0E76A434CC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6492BFC6-9F1E-4D08-9531-0E76A434CC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6492BFC6-9F1E-4D08-9531-0E76A434CC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6492BFC6-9F1E-4D08-9531-0E76A434CC39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77A06190-AAF7-4723-8734-F5D2EC0E657A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77A06190-AAF7-4723-8734-F5D2EC0E657A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77A06190-AAF7-4723-8734-F5D2EC0E657A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -38,7 +32,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2AEBFA87-296F-4C09-92D8-14559B2A0D1B} = {61665BE7-B734-4312-AC1E-055FBF20F32F}
-		{6492BFC6-9F1E-4D08-9531-0E76A434CC39} = {61665BE7-B734-4312-AC1E-055FBF20F32F}
 		{77A06190-AAF7-4723-8734-F5D2EC0E657A} = {61665BE7-B734-4312-AC1E-055FBF20F32F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
