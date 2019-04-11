@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class MediatorCommandHandler : ICommandHandler
+    public class MediatorCommandDispatcher : ICommandDispatcher
     {
         private readonly IMediator mediator;
 
-        public MediatorCommandHandler(IMediator mediator)
+        public MediatorCommandDispatcher(IMediator mediator)
         {
             this.mediator = mediator;
         }
 
-        public async Task HandleAsync(ICommand command)
+        public async Task DispatchAsync(ICommand command)
         {
             await mediator.Publish(command);
         }

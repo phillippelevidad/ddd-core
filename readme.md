@@ -24,6 +24,17 @@ namespace Domain
         }
     }
 }
+
+namespace Application
+{
+	public class DoSomethingWhenTodoItemCompleted : IDomainEventHandler<TodoItemCompleted>
+	{
+		public async Task Handle(TodoItemCompleted domainEvent, CancellationToken cancellationToken)
+        {
+            // Something cool...
+        }
+	}
+}
 ```
 
 ## CQRS
@@ -38,7 +49,7 @@ namespace Application
         public TodoItemId Id { get; set; }
     }
 
-    public class CompleteTodoItemHandler : INotificationHandler<CompleteTodoItem>
+    public class CompleteTodoItemHandler : ICommandHandler<CompleteTodoItem>
     {
         public async Task Handle(CompleteTodoItem command, CancellationToken cancellationToken)
         {
@@ -67,7 +78,7 @@ namespace Application
 
 namespace Infra
 {
-    public class ListPendingTodoItemsHandler : IRequestHandler<ListPendingTodoItems, ListPendingTodoItemsResponse>
+    public class ListPendingTodoItemsHandler : IQueryHandler<ListPendingTodoItems, ListPendingTodoItemsResponse>
     {
         public async Task<ListPendingTodoItemsResponse> Handle(ListPendingTodoItems query, CancellationToken cancellationToken)
         {
@@ -75,4 +86,83 @@ namespace Infra
         }
     }
 }
+```
+
+Finally, to send commands and run queries in your application:
+
+``` csharp
+public class MyController
+{
+	private readonly ICommandDispatcher commands;
+	private readonly IQueryDispatcher queries;
+
+	public MyController(ICommandDispatcher commands, IQueryDispatcher queries)
+	{
+		this.commands = commands;
+		this.queries = queries;
+	}
+
+	public async Task OnGetAsync()
+	{
+		var pending = await queries.QueryAsync(new ListPendingTodoItems());
+	}
+
+	public async Task OnPostCompleteTodoAsync(Guid id)
+	{
+		await commands.DispatchAsync(new CompleteTodoItem(id));
+	}
+}
+```
+
+As for dispatching domain events, a google place to call the dispatcher might be your repository's' SaveChanges or similar, right before or right after the fact:
+
+``` csharp
+public class AppDbContext : DbContext
+{
+	private readonly IDomainEventDispatcher dispatcher;
+
+	public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher) : base(options)
+	{
+		this.dispatcher = dispatcher;
+	}
+
+	public async override Task<int> SaveChangesAsync()
+	{
+		var result = await base.SaveChangesAsync();
+		await DispatchDomainEventsAsync();
+		return result;
+	}
+
+	private async Task DispatchDomainEventsAsync()
+	{
+		var events = ChangeTracker.Entries<BaseEntity>()
+            .Where(e => e.Entity.HasDomainEvents)
+			.SelectMany(e => e.Entity.ConsumeDomainEvents());
+
+		foreach (var evt in events)
+			await dispatcher.DispatchAsync(evt);
+	}
+}
+```
+
+## Dependency Injection and the use of MediatR
+
+MediatR is used to bind Commands, DomainEvents and Queries to their respective handlers at runtime, so you need to register them.
+
+**Long-story short**: In your `ConfigureServices` method, do:
+
+``` csharp
+public void ConfigureServices(IServiceCollection services)
+{
+	// using Core.Infra
+	services.AddCore();
+}
+```
+
+This will automatically scan all assemblies at startup, which can be costly depending on how many references you have. Alternatively, you can specify which assemblies to look:
+
+``` csharp
+	services.AddCore(
+		typeof(SomeClass).Assembly,
+		typeof(AnotherClass).Assembly);
 ```

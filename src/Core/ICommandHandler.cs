@@ -1,9 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace Core
 {
-    public interface ICommandHandler
+    public interface ICommandHandler<TCommand> : INotificationHandler<TCommand> where TCommand : ICommand
     {
-        Task HandleAsync(ICommand command);
     }
 }

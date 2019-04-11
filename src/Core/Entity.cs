@@ -14,7 +14,7 @@ namespace Core
 
         public IEnumerable<IDomainEvent> ConsumeDomainEvents()
         {
-            var events = domainEvents.AsReadOnly();
+            var events = domainEvents.ToArray();
             domainEvents.Clear();
             return events;
         }

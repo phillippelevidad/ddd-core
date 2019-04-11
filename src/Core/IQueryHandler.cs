@@ -1,9 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace Core
 {
-    public interface IQueryHandler
+    public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse> where TResponse : IQueryResponse
     {
-        Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query) where TResponse : IQueryResponse;
+
     }
 }
