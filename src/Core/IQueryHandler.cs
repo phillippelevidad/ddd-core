@@ -1,9 +1,8 @@
-﻿using System.Threading;
+﻿using MediatR;
 
 namespace Core
 {
-    public interface IQueryHandler<in TQuery, TResponse> where TQuery : IQuery<TResponse> where TResponse : IQueryResponse
+    public interface IQueryHandler<in TQuery, TResponse> : IRequestHandler<TQuery, TResponse> where TQuery : IQuery<TResponse> where TResponse : IQueryResponse
     {
-
     }
 }

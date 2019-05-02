@@ -1,12 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using MediatR;
+using System.Threading.Tasks;
 
 namespace Core
 {
     public class MediatorQueryDispatcher : IQueryDispatcher
     {
-        public Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query) where TResponse : IQueryResponse
+        private readonly IMediator mediator;
+
+        public MediatorQueryDispatcher(IMediator mediator)
         {
-            throw new System.NotImplementedException();
+            this.mediator = mediator;
+        }
+
+        public async Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query) where TResponse : IQueryResponse
+        {
+            return await mediator.Send(query);
         }
     }
 }
